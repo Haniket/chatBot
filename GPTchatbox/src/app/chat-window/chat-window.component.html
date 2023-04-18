@@ -1,0 +1,52 @@
+
+<body class="flex flex-col items-center justify-center w-screen min-h-screen bg-gray-100 text-gray-800 md:p-10 ">
+	
+	<!-- Component Start -->
+	<div  class="flex flex-col flex-grow w-full max-w-xl bg-white shadow-xl md:rounded-lg overflow-hidden">
+		<div class="bg-gradient-to-r from-sky-500 to-indigo-500 p-4 flex text-white">
+			<mat-icon class="material-symbols-outlined text-white flex self-center" color = "#ffff">arrow_back_ios_new</mat-icon>
+			<img src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTd8fGFuaW1lJTIwaHVtYW58ZW58MHwwfDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60" class="flex-shrink-0 h-11 w-11 rounded-full bg-gray-300 ml-3" />
+			<p class="flex self-center text-xl font-medium ml-2">My AI</p>
+	
+		</div>
+		<div  class="flex flex-col flex-grow h-0 p-4 overflow-auto snap-start" #scrollMe >
+			<div *ngFor="let chat of chatWindow">
+
+			<div *ngIf="chat.by=='Me'" class="flex w-full mt-2 space-x-3 max-w-xs ml-auto justify-end">
+				<div>
+					<div class="bg-blue-600 text-white p-3 rounded-l-lg rounded-br-lg">
+						<p class="text-sm">{{chat.message}}</p>
+					</div>
+					<span class="text-xs text-gray-500 leading-none">{{gettime(chat.time)}} ago</span>
+				</div>
+				<img src="https://images.unsplash.com/photo-1542909168-82c3e7fdca5c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aHVtYW4lMjBmYWNlfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60" class="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300" />
+			
+				<!-- <div class="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300"></div> -->
+					</div>
+			<div *ngIf="chat.by=='Friend'" class="flex w-full mt-2 space-x-3 max-w-xs">
+				<img src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTd8fGFuaW1lJTIwaHVtYW58ZW58MHwwfDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60" class="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300" />
+				<!-- <div class="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300"></div> -->
+				<div>
+					<div class="bg-gray-300 p-3 rounded-r-lg rounded-bl-lg">
+						<p class="text-sm">{{chat.message.result}}</p>
+					</div>
+					<span class="text-xs text-gray-500 leading-none">{{gettime(chat.message.time)}} ago</span>
+				</div>
+			</div>
+			
+		</div>
+		</div>
+		
+		
+		<form class="msger-inputarea" [formGroup]="form" (ngSubmit)="onSubmit()">
+		<p *ngIf="isLoading" class="text-gray-500 px-3 mx-3 font-light">typing...</p>	
+		<div class="bg-gray-300 p-4 flex">
+				<input type="text" formControlName="message" class="flex items-center h-10 w-full rounded px-3 text-sm" placeholder="Enter your message..." />
+				<button type="submit" class="font-semibold px-2 mx-2 text-center" [disabled]="form.controls['message']?.errors?.required || form.controls['message']?.hasError('atLeastOneLetter') "><mat-icon color = "primary">send</mat-icon></button>
+		
+			</div>
+		</form>
+	</div>
+	<!-- Component End  -->
+
+</body>
